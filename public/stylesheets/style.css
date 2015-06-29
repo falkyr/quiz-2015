@@ -1,16 +1,29 @@
+html { height: 100%; }
+
 * { margin: 0; padding: 0;}
 
 body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
 }
 
 a {
   color: #00B7FF;
 }
 
-#page-wrap { margin: 2% auto; color: white; }
-#page-wrap > .main {border: 1px solid #999; padding: 1%;
-  margin-bottom: 1px; color: black; }
+#page-wrap {
+  margin: 2% auto;
+  color: white;
+  height: 100%;
+}
+
+#page-wrap > .main {
+  border: 1px #solid #999;
+  padding: 1%;
+  margin-bottom: 1px;
+  color: black;
+  height: 100%;
+}
 
 section > div {
   padding: 20px;

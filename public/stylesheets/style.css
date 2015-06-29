@@ -14,7 +14,7 @@ a {
 #page-wrap {
   margin: 2% auto;
   color: white;
-  height: 100%;
+  height: auto;
 }
 
 #page-wrap > .main {
@@ -22,7 +22,7 @@ a {
   padding: 1%;
   margin-bottom: 1px;
   color: black;
-  height: 100%;
+  height: auto;
 }
 
 section > div {

@@ -27,11 +27,11 @@ exports.index = function( req, res ){
 
 
     models.Quiz.findAll({where: [query, search], order: ['pregunta']}).then(function(quizes) {
-      res.render('quizes/index.ejs', { quizes: quizes });
+      res.render('quizes/index.ejs', { quizes: quizes, errors: [] });
     })
   }else{
     models.Quiz.findAll().then(function(quizes) {
-      res.render('quizes/index.ejs', { quizes: quizes });
+      res.render('quizes/index.ejs', { quizes: quizes, errors: [] });
     })
   }
 };
@@ -39,7 +39,7 @@ exports.index = function( req, res ){
 // GET /quizes/:id
 exports.show = function(req, res) {
   models.Quiz.find(req.params.quizId).then( function (quiz) {
-    res.render('quizes/show', { quiz: req.quiz });
+    res.render('quizes/show', { quiz: req.quiz, errors: [] });
   })
 };
 
@@ -47,9 +47,9 @@ exports.show = function(req, res) {
 exports.answer = function(req, res) {
   models.Quiz.find(req.params.quizId).then( function (quiz) {
     if (req.query.respuesta.toLowerCase() === req.quiz.respuesta.toLowerCase()) {
-      res.render('quizes/answer', { quiz:quiz, respuesta: 'correcta'});
+      res.render('quizes/answer', { quiz:quiz, respuesta: 'correcta', errors: []});
     }else{
-      res.render('quizes/answer', { quiz: req.quiz, respuesta: 'incorrecta'});
+      res.render('quizes/answer', { quiz: req.quiz, respuesta: 'incorrecta', errors: []});
     }
   })
 };
@@ -60,17 +60,25 @@ exports.new = function(req, res){
     { pregunta: "Pregunta", respuesta: "Respuesta"}
   );
 
-  res.render('quizes/new', {quiz: quiz});
+  res.render('quizes/new', {quiz: quiz, errors: []});
 }
 
 // GET /quizes/create
 exports.create = function(req, res){
   var quiz = models.Quiz.build( req.body.quiz );
 
-  // guarda en DB los campos pregunta y respuesta de quiz
-  quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
-      res.redirect('/quizes');
-  });  // Redirección HTTP (URL relativo) lista preguntas
+  quiz
+  .validate()
+  .then(function(err){ // Importante: then funciona con validate con la versión 2.0.0 de sequelize
+    if(err){
+      res.render('quizes/new', {quiz: quiz, errors: err.errors});
+    } else {
+      quiz // guarda en DB los campos pregunta y respuesta de quiz
+      .save({fields: ["pregunta", "respuesta"]})
+      .then( function(){ res.redirect('/quizes')})  // Redirección HTTP (URL relativo) lista preguntas
+      }
+    }
+  );
 
 };
 

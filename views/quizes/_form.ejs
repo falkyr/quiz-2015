@@ -8,6 +8,23 @@
   <input id="resp" type="text" name="quiz[respuesta]" value="<%= quiz.respuesta %>">
 </p>
 <p>
+  <label for="tema" class="rem">Tema:</label>
+  <select id="tema" name="quiz[tema]">
+    <option id="otro" value="otro">Otro</option>
+    <option id="humanidades" value="humanidades">Humanidades</option>
+    <option id="ocio" value="ocio">Ocio</option>
+    <option id="ciencia" value="ciencia">Ciencia</option>
+    <option id="tecnologia" value="tecnologia">Tecnología</option>
+  </select>
+</p>
+<p>
   <a href="/quizes"><button type="button">Cancelar</button></a>
   <input type="submit" value="Guardar">
 </p>
+
+<script type="text/javascript">
+  if(<%= quiz.tema %> != ""){
+    var elem = document.getElementById("<%= quiz.tema %>");
+    elem.selected="selected";
+  }
+</script>

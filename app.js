@@ -36,6 +36,14 @@ app.use(function(req, res, next) {
 
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
+
+  if(req.session.maxAge == 0){
+      delete req.session.user; // Destruye la sesion si han pasado 2min.
+  }else{
+    var twomin = 120000;
+    req.session.cookie.expires = new Date(Date.now() + twomin);
+    req.session.cookie.maxAge = twomin;
+  }
   next();
 });
 

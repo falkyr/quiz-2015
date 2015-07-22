@@ -1,27 +1,27 @@
-<p>Pregunta:
+<p><strong>Pregunta:</strong>
   <%= quiz.pregunta %>
 </p>
 <form class="" action="/quizes/<%= quiz.id %>/answer" method="get">
   <input type="text" name="respuesta" placeholder="Responda aquí">
-  <input type="submit" value="Enviar">
+  <input class="btn btn-primary" type="submit" value="Enviar">
 </form>
 
-<p>
+<div class="new_comment">
   <a href="/quizes/<%= quiz.id %>/comments/new">
-    <button>Nuevo comentario</button>
+    <button class="btn btn-success">Nuevo comentario</button>
   </a>
-</p>
+</div>
 
-<p>
+<div class="comments">
   <strong>Comentarios:</strong>
-</p>
+</div>
 <%for(index in quiz.Comments){%>
   <%if(quiz.Comments[index].publicado || session.user){%>
     <p>-
       <%= quiz.Comments[index].texto %>
 
       <%if(session.user && !quiz.Comments[index].publicado){%>
-        <a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/publish"><button type="button" name="button">Publicar</button></a>
+        <a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/publish"><button  class="btn btn-primary" type="button" name="button">Publicar</button></a>
       <%}%>
     </p>
   <%}%>
